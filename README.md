@@ -7,6 +7,10 @@
 
 ファイルは外部に送信されません（ローカル変換）。
 
+**▶ 公開サイト:** <https://shimasan0x00.github.io/sbv_srt_converter/>
+
+![アプリ画面](./.readme/overview.jpg)
+
 ---
 
 ## SBV と SRT の違い
