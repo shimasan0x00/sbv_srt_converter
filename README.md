@@ -1,5 +1,8 @@
 # SBV → SRT Converter
 
+[![CI](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/ci.yml/badge.svg)](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/ci.yml)
+[![Deploy](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/deploy.yml/badge.svg)](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/deploy.yml)
+
 ブラウザ内で完結する **SBV → SRT** 字幕変換ツール。ファイルは外部に送信されません（ローカル変換）。GitHub Pages にそのまま載せられる静的サイトです。
 
 ---
@@ -112,23 +115,36 @@ npm install
 
 ---
 
-## GitHub Pages へのデプロイ
+## CI / CD
 
-`vite.config.js` で `base: './'` を指定しているため、サブパス（`https://<user>.github.io/<repo>/`）配下でもアセット参照が壊れません。
+`.github/workflows/` に 2 本のワークフローを同梱しています。
 
-### 手順（branch / `docs` 公開を使う場合）
+### `ci.yml` — PR と main への push でテスト＆ビルド検証
 
-1. `npm run build` で `dist/` を生成。
-2. `dist/` の中身を `docs/` にコピーして commit&push。
-3. GitHub の `Settings → Pages → Build and deployment` で **Source: Deploy from a branch** を選び、`main` ブランチの `/docs` フォルダを指定。
+| トリガ | ジョブ | 内容 |
+| --- | --- | --- |
+| `pull_request` (base: main) | `test` | `npm ci` → `npm test` → `npm run build` |
+| `push` (branch: main) | `test` | 同上 |
 
-### 手順（`gh-pages` ブランチを使う場合）
+PR をマージ可能にする前に Vitest と Vite のビルドが緑であることを保証します。
 
-1. `npm run build` で `dist/` を生成。
-2. `dist/` の中身を `gh-pages` ブランチに push（手動 or `git subtree`、もしくは `gh-pages` パッケージ等）。
-3. GitHub の `Settings → Pages` で `gh-pages` ブランチをソースに指定。
+### `deploy.yml` — main への push で GitHub Pages へ自動デプロイ
 
-> 自動デプロイ（GitHub Actions）は今回は同梱していません。必要になれば `.github/workflows/` に追加してください。
+`main` への push（および手動 `workflow_dispatch`）で以下を実行：
+
+1. `npm ci` → `npm test` → `npm run build`
+2. `dist/` を Pages 用アーティファクトにアップロード
+3. `actions/deploy-pages@v4` で公開
+
+`vite.config.js` の `base: './'` によりサブパス（`https://<user>.github.io/<repo>/`）配下でもアセット参照が壊れません。
+
+### 有効化手順（リポジトリ初回のみ）
+
+1. GitHub の `Settings → Pages → Build and deployment` で **Source: GitHub Actions** を選択。
+2. `main` に push（または `Actions` タブから `Deploy to GitHub Pages` を手動実行）。
+3. ワークフロー完了後、`https://<user>.github.io/<repo>/` で公開される。
+
+> ブランチ保護やレビュー必須化を入れる場合は `Settings → Branches → Branch protection rules` で `main` を保護し、上記 `CI / test` をマージ必須チェックに指定してください。
 
 ---
 
