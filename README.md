@@ -119,14 +119,14 @@ npm install
 
 `.github/workflows/` に 2 本のワークフローを同梱しています。
 
-### `ci.yml` — PR と main への push でテスト＆ビルド検証
+### `ci.yml` — PR で常時テスト＆ビルド検証
 
 | トリガ | ジョブ | 内容 |
 | --- | --- | --- |
 | `pull_request` (base: main) | `test` | `npm ci` → `npm test` → `npm run build` |
-| `push` (branch: main) | `test` | 同上 |
+| `workflow_dispatch` | `test` | 同上を手動実行 |
 
-PR をマージ可能にする前に Vitest と Vite のビルドが緑であることを保証します。
+PR をマージ可能にする前に Vitest と Vite のビルドが緑であることを保証します。`main` への push 時は `deploy.yml` 側のビルドジョブで同じ検証を行うため、`ci.yml` では `push` トリガを持たせず二重実行を回避しています。
 
 ### `deploy.yml` — main への push で GitHub Pages へ自動デプロイ
 
