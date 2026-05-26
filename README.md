@@ -77,7 +77,7 @@
 
 ### 必要環境
 
-- Node.js 18+ （Vite 5 / Vitest 2 が要求）
+- Node.js 20+ （Vite 5 / Vitest 2 が要求）。CI は Node 24（Active LTS）で実行。
 
 ### セットアップ
 
