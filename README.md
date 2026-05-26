@@ -3,7 +3,9 @@
 [![CI](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/ci.yml/badge.svg)](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/ci.yml)
 [![Deploy](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/deploy.yml/badge.svg)](https://github.com/shimasan0x00/sbv_srt_converter/actions/workflows/deploy.yml)
 
-ブラウザ内で完結する **SBV → SRT** 字幕変換ツール。ファイルは外部に送信されません（ローカル変換）。GitHub Pages にそのまま載せられる静的サイトです。
+ブラウザ内で完結する **SBV → SRT** 字幕変換ツール。
+
+ファイルは外部に送信されません（ローカル変換）。
 
 ---
 
@@ -11,9 +13,9 @@
 
 両者とも「タイムコード + 字幕本文」を並べるテキスト形式ですが、書式が異なります。
 
-### SBV (SubViewer / 旧 YouTube 字幕)
+### SBV (SubViewer / YouTube 字幕)
 
-- 旧 YouTube 字幕エディタが出力する形式。
+- YouTube 字幕エディタが出力する形式。
 - **インデックス番号なし**。
 - タイムスタンプ書式: `H:MM:SS.mmm,H:MM:SS.mmm`
   - 時は 1 桁可（ゼロパディングなし）
@@ -150,4 +152,4 @@ PR をマージ可能にする前に Vitest と Vite のビルドが緑である
 
 ## ライセンス
 
-未定。必要に応じて追加してください。
+[MIT License](./LICENSE) © 2026 shimasan0x00
